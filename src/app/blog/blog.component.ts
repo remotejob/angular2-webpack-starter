@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { HttpBlogService } from "./blog.service";
 /*
  * We're loading this component asynchronously
  * We are using some magic with es6-promise-loader that will wrap the module with a Promise
@@ -10,10 +11,12 @@ console.log('`Blog` component loaded asynchronously');
 
 @Component({
   selector: 'blog',
+  providers: [HttpBlogService],
   styles: [`
   `],
   template: `
     <h1>Blog</h1>
+    <button type="button" (click)="saveClient()">Click Me!</button>
     <div>
       For hot module reloading run
       <pre>npm run start:hmr</pre>
@@ -24,11 +27,21 @@ console.log('`Blog` component loaded asynchronously');
       </h3>
     </div>
     <pre>this.localState = {{ localState | json }}</pre>
+<div *ngIf="client">
+    <h3>Отправлены следующие данные:</h3>
+
+    <span class="label label-default">телефон:</span>&nbsp;{{client.Phone}}<br/><br/>
+    <span class="label label-default">е-маил:</span>&nbsp;{{client.Email}}<br/><br/>
+    <span class="label label-default">skype:</span>&nbsp;{{client.Skype}}<br/><br/>
+   
+</div>
+
   `
 })
 export class Blog {
+  client: Object;
   localState: any;
-  constructor(public route: ActivatedRoute) {
+  constructor(public route: ActivatedRoute,public _httpBlogService: HttpBlogService) {
 
   }
 
@@ -60,6 +73,20 @@ export class Blog {
         });
 
     });
+  }
+
+
+   saveClient(value: any) {
+
+    
+
+    this._httpBlogService.getEmailRestful("value.phone", "value.email", "value.skype")
+      .subscribe(
+      // data => this.sendClientToServer = JSON.stringify(data), // put the data returned from the server in our variable
+      data => this.client = data,
+      error => console.log("Error HTTP GET Service"), // in case of failure show this message
+      () => console.log("OK")//run this code in all cases
+      );
   }
 
 }
