@@ -29,6 +29,11 @@ console.log('`Blog` component loaded asynchronously');
     <pre>this.localState = {{ localState | json }}</pre>
 <div *ngIf="client">
     <h3>Отправлены следующие данные:</h3>
+    <ul>
+  <li *ngFor="let item of client; let i = index">
+    {{i}} {{item.Title}}
+  </li>
+</ul>
 
     <span class="label label-default">телефон:</span>&nbsp;{{client.Phone}}<br/><br/>
     <span class="label label-default">е-маил:</span>&nbsp;{{client.Email}}<br/><br/>
