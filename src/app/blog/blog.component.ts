@@ -16,28 +16,15 @@ console.log('`Blog` component loaded asynchronously');
   `],
   template: `
     <h1>Blog</h1>
-    <button type="button" (click)="saveClient()">Click Me!</button>
-    <div>
-      For hot module reloading run
-      <pre>npm run start:hmr</pre>
-    </div>
-    <div>
-      <h3>
-        patrick@AngularClass.com
-      </h3>
-    </div>
-    <pre>this.localState = {{ localState | json }}</pre>
+    <button type="button" (click)="saveClient()">Click Me! get Some data from mongodb Server</button>
+
 <div *ngIf="client">
-    <h3>Отправлены следующие данные:</h3>
+    <h3>Articles:</h3>
     <ul>
   <li *ngFor="let item of client; let i = index">
     {{i}} {{item.Title}}
   </li>
 </ul>
-
-    <span class="label label-default">телефон:</span>&nbsp;{{client.Phone}}<br/><br/>
-    <span class="label label-default">е-маил:</span>&nbsp;{{client.Email}}<br/><br/>
-    <span class="label label-default">skype:</span>&nbsp;{{client.Skype}}<br/><br/>
    
 </div>
 
@@ -82,8 +69,6 @@ export class Blog {
 
 
    saveClient(value: any) {
-
-    
 
     this._httpBlogService.getEmailRestful("value.phone", "value.email", "value.skype")
       .subscribe(
